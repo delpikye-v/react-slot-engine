@@ -3,5 +3,5 @@ import { SlotEngine } from "../engine/types";
 export declare function SlotProvider({ engine, children, }: {
     engine?: SlotEngine;
     children: React.ReactNode;
-}): React.JSX.Element;
+}): JSX.Element;
 export declare function useSlotEngineContext(): SlotEngine;

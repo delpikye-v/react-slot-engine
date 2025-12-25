@@ -1,16 +1,15 @@
-## 📘 react-slot-engine-z
-
-A scoped slot & plugin engine for composing React UIs dynamically.   
-
-react-slot-engine-z enables plugin-driven UI composition, layout extensibility, and feature isolation in React applications — without prop drilling, heavy context usage, or tight coupling.   
-
-<a href="https://codesandbox.io/p/sandbox/c57cwd" target="_blank">LIVE EXAMPLE</a>
-
----
+## 🧩 react-slot-engine-z
 
 [![NPM](https://img.shields.io/npm/v/react-slot-engine-z.svg)](https://www.npmjs.com/package/react-slot-engine-z)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 ![Downloads](https://img.shields.io/npm/dt/react-slot-engine-z.svg)
+
+---
+
+A lightweight slot & plugin engine for composing React UIs dynamically.
+Enable plugin-driven UI, layout extensibility, and feature isolation — no prop drilling, no heavy context, no tight coupling.
+
+<a href="https://codesandbox.io/p/sandbox/9sqx24" target="_blank">LIVE EXAMPLE</a>
 
 ---
 
@@ -41,14 +40,15 @@ npm install react-slot-engine-z
 
 ### 🚀 Basic Usage
 
-#### 1️⃣ Create a Slot Engine
+##### 1️⃣ Create a Slot Engine
 ```ts
+// require
 import { createSlotEngine } from "react-slot-engine-z"
 
 export const engine = createSlotEngine()
 ```
 
-#### 2️⃣ Register Slot Content
+##### 2️⃣ Register Slot Content
 
 ```ts
 engine.register("header", () => <h1>User Header</h1>)
@@ -56,13 +56,13 @@ engine.register("header", () => <h1>User Header</h1>)
 engine.register(
   "header",
   () => <h1>Admin Header</h1>,
-  { priority: 100 }
+  { priority: 100 } // higher priority renders first
 )
 ```
 
 - Higher priority entries are rendered first.
 
-#### 3️⃣ Provide the Engine
+##### 3️⃣ Provide the Engine
 ```ts
 import { SlotProvider } from "react-slot-engine-z"
 
@@ -71,7 +71,7 @@ import { SlotProvider } from "react-slot-engine-z"
 </SlotProvider>
 ```
 
-#### 4️⃣ Declare Slots in Layout
+##### 4️⃣ Declare Slots in Layout
 ```ts
 import { Slot } from "react-slot-engine-z"
 
@@ -102,15 +102,14 @@ function Layout() {
 ### 🔌 Plugin System
 
 - Slot Engine supports a structured plugin lifecycle.
-##### Plugin Example
+- Async slots automatically render with React.Suspense.
 
 ```ts
 import React from "react"
-import { SlotPlugin } from "react-slot-engine-z"
+import { SlotPlugin, applySlotPlugins } from "react-slot-engine-z"
 
-export const AdminPlugin: SlotPlugin = {
+const AdminPlugin: SlotPlugin = {
   name: "admin",
-
   setup(engine) {
     return engine.register(
       "header",
@@ -119,39 +118,28 @@ export const AdminPlugin: SlotPlugin = {
     )
   },
 }
-```
 
-##### Apply plugins:
-
-```ts
-import { applySlotPlugins } from "react-slot-engine-z"
-
+// Apply plugin
 applySlotPlugins(engine, [AdminPlugin])
-
 ```
-
-- The slot automatically wraps content with React.Suspense.
 
 --- 
 
-### 🧩 Multiple Engine Scopes (Nested Providers)
+### 🧩 Nested Engine Example
 
 ```ts
 <SlotProvider engine={rootEngine}>
   <Layout />
 
   <SlotProvider>
-    {/* Local overrides */}
     <Layout />
   </SlotProvider>
 </SlotProvider>
 ```
 
-- Nearest engine wins
+- Nearest engine wins, fallback to parent if slot missing
 
-- Falls back to parent engine
-
-- Perfect for role-based or page-level UI
+- Useful for page-level or role-based overrides
 
 ---
 
@@ -166,18 +154,6 @@ applySlotPlugins(engine, [AdminPlugin])
 - Role / environment-based UI
 
 - Micro-frontend friendly composition
-
-```bash
-Layout
- └─ <Slot name="header" />
-        ↓
-Slot Engine
- ├─ slot registration
- ├─ plugin lifecycle
- ├─ priority resolution
- ├─ async / lazy rendering
- └─ scoped overrides
-```
 
 ---
 

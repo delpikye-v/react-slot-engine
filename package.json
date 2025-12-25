@@ -1,6 +1,6 @@
 {
   "name": "react-slot-engine-z",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A scoped slot and plugin engine for composing React UIs dynamically",
 
   "license": "MIT",
