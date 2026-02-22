@@ -1,1 +1,181 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("react");function t(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var n=t(e),r=function(){return r=Object.assign||function(e){for(var t,n=1,r=arguments.length;n<r;n++)for(var o in t=arguments[n])Object.prototype.hasOwnProperty.call(t,o)&&(e[o]=t[o]);return e},r.apply(this,arguments)};function o(e,t,n){if(n||2===arguments.length)for(var r,o=0,u=t.length;o<u;o++)!r&&o in t||(r||(r=Array.prototype.slice.call(t,0,o)),r[o]=t[o]);return e.concat(r||Array.prototype.slice.call(t))}"function"==typeof SuppressedError&&SuppressedError;var u=0;function i(e){var t=new Map,n=new Map,r=new Map;function i(e){var t;null===(t=n.get(e))||void 0===t||t.forEach(function(e){return e()})}return{parent:e,register:function(e,n,a){var l,c,s={id:++u,render:n,priority:null!==(l=null==a?void 0:a.priority)&&void 0!==l?l:0,async:null==a?void 0:a.async},f=o(o([],null!==(c=t.get(e))&&void 0!==c?c:[],!0),[s],!1);return f.sort(function(e,t){return t.priority-e.priority}),t.set(e,f),r.set(e,f),i(e),function(){var n,o=(null!==(n=t.get(e))&&void 0!==n?n:[]).filter(function(e){return e.id!==s.id});o.length?(t.set(e,o),r.set(e,o)):(t.delete(e),r.delete(e)),i(e)}},get:function(t){var n,o;return null!==(o=null!==(n=r.get(t))&&void 0!==n?n:null==e?void 0:e.get(t))&&void 0!==o?o:[]},subscribe:function(r,o){var u,i=null!==(u=n.get(r))&&void 0!==u?u:new Set;i.add(o),n.set(r,i);var a=t.has(r)||null==e?void 0:e.subscribe(r,o);return function(){i.delete(o),0===i.size&&n.delete(r),null==a||a()}}}}var a=n.default.createContext(null);function l(){var e=n.default.useContext(a);if(!e)throw new Error("SlotEngine missing. Wrap your app with <SlotProvider>.");return e}function c(e){var t={exports:{}};return e(t,t.exports),t.exports}var s="function"==typeof Object.is?Object.is:function(e,t){return e===t&&(0!==e||1/e==1/t)||e!=e&&t!=t},f=n.default.useState,d=n.default.useEffect,p=n.default.useLayoutEffect,v=n.default.useDebugValue;function E(e){var t=e.getSnapshot;e=e.value;try{var n=t();return!s(e,n)}catch(e){return!0}}var g="undefined"==typeof window||void 0===window.document||void 0===window.document.createElement?function(e,t){return t()}:function(e,t){var n=t(),r=f({inst:{value:n,getSnapshot:t}}),o=r[0].inst,u=r[1];return p(function(){o.value=n,o.getSnapshot=t,E(o)&&u({inst:o})},[e,n,t]),d(function(){return E(o)&&u({inst:o}),e(function(){E(o)&&u({inst:o})})},[e]),v(n),n},S={useSyncExternalStore:void 0!==n.default.useSyncExternalStore?n.default.useSyncExternalStore:g},_=c(function(e,t){"production"!==process.env.NODE_ENV&&function(){function e(e){var t=e.getSnapshot;e=e.value;try{var n=t();return!o(e,n)}catch(e){return!0}}"undefined"!=typeof __REACT_DEVTOOLS_GLOBAL_HOOK__&&"function"==typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart&&__REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());var r=n.default,o="function"==typeof Object.is?Object.is:function(e,t){return e===t&&(0!==e||1/e==1/t)||e!=e&&t!=t},u=r.useState,i=r.useEffect,a=r.useLayoutEffect,l=r.useDebugValue,c=!1,s=!1,f="undefined"==typeof window||void 0===window.document||void 0===window.document.createElement?function(e,t){return t()}:function(t,n){c||void 0===r.startTransition||(c=!0,console.error("You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."));var f=n();if(!s){var d=n();o(f,d)||(console.error("The result of getSnapshot should be cached to avoid an infinite loop"),s=!0)}var p=(d=u({inst:{value:f,getSnapshot:n}}))[0].inst,v=d[1];return a(function(){p.value=f,p.getSnapshot=n,e(p)&&v({inst:p})},[t,f,n]),i(function(){return e(p)&&v({inst:p}),t(function(){e(p)&&v({inst:p})})},[t]),l(f),f};t.useSyncExternalStore=void 0!==r.useSyncExternalStore?r.useSyncExternalStore:f,"undefined"!=typeof __REACT_DEVTOOLS_GLOBAL_HOOK__&&"function"==typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop&&__REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error())}()}),y=c(function(e){"production"===process.env.NODE_ENV?e.exports=S:e.exports=_});exports.Slot=function(t){var o=t.name,u=t.fallback,i=void 0===u?null:u,a=t.loadingFallback,c=void 0===a?null:a,s=t.mode,f=void 0===s?"first":s,d=t.props,p=l(),v=e.useCallback(function(e){return p.subscribe(o,e)},[p,o]),E=y.useSyncExternalStore(v,function(){var e=p.get(o);return e&&e.length?e:[]},function(){return[]});if(!E.length)return n.default.createElement(n.default.Fragment,null,i);var g=function(t){var o=t.render,u=n.default.createElement(o,r({},d));return t.async?n.default.createElement(e.Suspense,{fallback:c,key:t.id},u):n.default.createElement(n.default.Fragment,{key:t.id},u)};return n.default.createElement(n.default.Fragment,null,"all"===f?E.map(g):g(E[0]))},exports.SlotProvider=function(e){var t=e.engine,r=e.children,o=n.default.useContext(a),u=n.default.useRef(null);return u.current||(u.current=null!=t?t:i(null!=o?o:void 0)),n.default.createElement(a.Provider,{value:u.current},r)},exports.applySlotPlugins=function(e,t){void 0===t&&(t=[]);var n=[];return t.forEach(function(t){try{var r=t.setup(e);"function"==typeof r&&n.push(r)}catch(e){"production"!==process.env.NODE_ENV&&console.error("[SlotPlugin:".concat(t.name,"] setup failed"),e)}}),function(){n.forEach(function(e){return e()})}},exports.createSlotEngine=i,exports.useSlotEngine=function(){var e=l();return{engine:e,register:e.register,get:e.get}},exports.useSlotEngineContext=l;
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var jsxRuntime = require('react/jsx-runtime');
+var React = require('react');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+
+let _id = 0;
+function uid() {
+    return ++_id;
+}
+function createSlotEngine(parent) {
+    const registry = new Map();
+    const listeners = new Map();
+    function notify(name) {
+        var _a;
+        (_a = listeners.get(name)) === null || _a === void 0 ? void 0 : _a.forEach(l => {
+            try {
+                l();
+            }
+            catch (err) {
+                if (process.env.NODE_ENV !== "production") {
+                    console.error("[SlotEngine] listener error", err);
+                }
+            }
+        });
+    }
+    function sortEntries(list) {
+        return list.sort((a, b) => b.priority - a.priority ||
+            a.id - b.id // stable order
+        );
+    }
+    return {
+        parent,
+        register(name, render, options) {
+            var _a, _b;
+            const entry = {
+                id: uid(),
+                render,
+                priority: (_a = options === null || options === void 0 ? void 0 : options.priority) !== null && _a !== void 0 ? _a : 0,
+                async: options === null || options === void 0 ? void 0 : options.async,
+            };
+            const current = (_b = registry.get(name)) !== null && _b !== void 0 ? _b : [];
+            const next = sortEntries([...current, entry]);
+            registry.set(name, next);
+            notify(name);
+            return () => {
+                const list = registry.get(name);
+                if (!list)
+                    return;
+                const updated = list.filter(e => e.id !== entry.id);
+                if (updated.length > 0) {
+                    registry.set(name, updated);
+                }
+                else {
+                    registry.delete(name);
+                }
+                notify(name);
+            };
+        },
+        get(name) {
+            var _a, _b;
+            const local = (_a = registry.get(name)) !== null && _a !== void 0 ? _a : [];
+            const inherited = (_b = parent === null || parent === void 0 ? void 0 : parent.get(name)) !== null && _b !== void 0 ? _b : [];
+            if (!local.length)
+                return inherited;
+            if (!inherited.length)
+                return local;
+            return sortEntries([...local, ...inherited]);
+        },
+        subscribe(name, cb) {
+            var _a;
+            const set = (_a = listeners.get(name)) !== null && _a !== void 0 ? _a : new Set();
+            set.add(cb);
+            listeners.set(name, set);
+            const unsubParent = parent === null || parent === void 0 ? void 0 : parent.subscribe(name, cb);
+            return () => {
+                set.delete(cb);
+                if (set.size === 0) {
+                    listeners.delete(name);
+                }
+                unsubParent === null || unsubParent === void 0 ? void 0 : unsubParent();
+            };
+        },
+    };
+}
+
+const SlotEngineContext = React__default["default"].createContext(null);
+function SlotProvider({ engine, children, }) {
+    const parent = React__default["default"].useContext(SlotEngineContext);
+    const instance = React__default["default"].useMemo(() => engine !== null && engine !== void 0 ? engine : createSlotEngine(parent !== null && parent !== void 0 ? parent : undefined), [engine, parent]);
+    return (jsxRuntime.jsx(SlotEngineContext.Provider, { value: instance, children: children }));
+}
+function useSlotEngineContext() {
+    const ctx = React__default["default"].useContext(SlotEngineContext);
+    if (!ctx) {
+        throw new Error("SlotEngine missing. Wrap your app with <SlotProvider>.");
+    }
+    return ctx;
+}
+
+function Slot({ name, fallback = null, loadingFallback = null, mode = "first", props, }) {
+    const engine = useSlotEngineContext();
+    const subscribe = React.useCallback((cb) => engine.subscribe(name, cb), [engine, name]);
+    const getSnapshot = React.useCallback(() => engine.get(name), [engine, name]);
+    const entries = React.useSyncExternalStore(subscribe, getSnapshot, () => [] // SSR fallback
+    );
+    const rendered = React.useMemo(() => {
+        if (!entries.length)
+            return fallback;
+        const renderEntry = (entry) => {
+            const Render = entry.render;
+            const node = jsxRuntime.jsx(Render, { ...props });
+            return entry.async ? (jsxRuntime.jsx(React.Suspense, { fallback: loadingFallback, children: node }, entry.id)) : (jsxRuntime.jsx(React__default["default"].Fragment, { children: node }, entry.id));
+        };
+        return mode === "all"
+            ? entries.map(renderEntry)
+            : renderEntry(entries[0]);
+    }, [entries, mode, props, fallback, loadingFallback]);
+    return jsxRuntime.jsx(jsxRuntime.Fragment, { children: rendered });
+}
+
+function useSlotEngine() {
+    const engine = useSlotEngineContext();
+    return React.useMemo(() => ({
+        engine,
+        register: engine.register,
+        get: engine.get,
+    }), [engine]);
+}
+
+function applySlotPlugins(engine, plugins = []) {
+    const disposers = [];
+    plugins.forEach(p => {
+        try {
+            const dispose = p.setup(engine);
+            if (typeof dispose === "function") {
+                disposers.push(dispose);
+            }
+        }
+        catch (err) {
+            if (process.env.NODE_ENV !== "production") {
+                console.error(`[SlotPlugin:${p.name}] setup failed`, err);
+            }
+        }
+    });
+    return () => {
+        disposers.forEach(d => {
+            try {
+                d();
+            }
+            catch (_a) { }
+        });
+    };
+}
+
+async function executeSlots(entries, props) {
+    const results = [];
+    for (const entry of entries) {
+        if (entry.async) {
+            const r = await entry.render(props);
+            results.push(r);
+        }
+        else {
+            results.push(entry.render(props));
+        }
+    }
+    return results;
+}
+
+exports.Slot = Slot;
+exports.SlotProvider = SlotProvider;
+exports.applySlotPlugins = applySlotPlugins;
+exports.createSlotEngine = createSlotEngine;
+exports.executeSlots = executeSlots;
+exports.useSlotEngine = useSlotEngine;
+exports.useSlotEngineContext = useSlotEngineContext;

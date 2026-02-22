@@ -1,54 +1,75 @@
-## 🧩 react-slot-engine-z
+# 🔌 react-slot-engine-z
 
-[![NPM](https://img.shields.io/npm/v/react-slot-engine-z.svg)](https://www.npmjs.com/package/react-slot-engine-z)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-![Downloads](https://img.shields.io/npm/dt/react-slot-engine-z.svg)
-
----
-
-A lightweight slot & plugin engine for composing React UIs dynamically.
-Enable plugin-driven UI, layout extensibility, and feature isolation — no prop drilling, no heavy context, no tight coupling.
+[![NPM](https://img.shields.io/npm/v/react-slot-engine-z.svg)](https://www.npmjs.com/package/react-slot-engine-z) ![Downloads](https://img.shields.io/npm/dt/react-slot-engine-z.svg)
 
 <a href="https://codesandbox.io/p/sandbox/9sqx24" target="_blank">LIVE EXAMPLE</a>
 
 ---
 
-### ✨ Why react-slot-engine-z?
+**Lightweight** slot & plugin engine for dynamic React UI composition.  
 
-- Slot-based UI composition
+Build extensible layouts, plugin-driven interfaces, and isolated feature injection —  
+without prop drilling, global stores, or tight coupling.
 
-- Scoped engines (nested providers)
-
-- Plugin-driven architecture
-
-- Priority-based rendering
-
-- Async / lazy slot support
-
-- No global store, no prop drilling
-
-- React 17+
+> Composable UI architecture with deterministic slot rendering.
 
 ---
 
-### 📦 Installation
-```ts
+## Why react-slot-engine-z?
+
+- 🧩 Slot-based UI composition
+- 🧠 Scoped engines (nested providers)
+- 🔌 Structured plugin lifecycle
+- 🎯 Priority-based rendering
+- ⏳ Async / lazy slot support (Suspense-ready)
+- 🚫 No global store
+- 🚫 No prop drilling
+- 📦 Tiny, predictable runtime
+
+---
+
+## Mental Model
+
+```bash
+plugin / feature
+        ↓
+engine.register(slot, render, options)
+        ↓
+slot registry (priority sorted)
+        ↓
+<Slot name="..." />
+        ↓
+rendered output
+```
+
+- Slots are named injection points.
+- Multiple entries can target the same slot.
+- Higher priority renders first.
+- Nearest engine wins (nested providers supported).
+
+---
+
+## Installation
+
+```bash
 npm install react-slot-engine-z
 ```
-  
+
 ---
 
-### 🚀 Basic Usage
+## Basic Usage
 
-##### 1️⃣ Create a Slot Engine
+### 1️⃣ Create Engine
+
 ```ts
-// require
 import { createSlotEngine } from "react-slot-engine-z"
 
 export const engine = createSlotEngine()
 ```
 
-##### 2️⃣ Register Slot Content
+---
+
+### 2️⃣ Register Slot Content
 
 ```ts
 engine.register("header", () => <h1>User Header</h1>)
@@ -56,14 +77,17 @@ engine.register("header", () => <h1>User Header</h1>)
 engine.register(
   "header",
   () => <h1>Admin Header</h1>,
-  { priority: 100 } // higher priority renders first
+  { priority: 100 }
 )
 ```
 
-- Higher priority entries are rendered first.
+Higher priority entries render first.
 
-##### 3️⃣ Provide the Engine
-```ts
+---
+
+### 3️⃣ Provide Engine
+
+```tsx
 import { SlotProvider } from "react-slot-engine-z"
 
 <SlotProvider engine={engine}>
@@ -71,8 +95,11 @@ import { SlotProvider } from "react-slot-engine-z"
 </SlotProvider>
 ```
 
-##### 4️⃣ Declare Slots in Layout
-```ts
+---
+
+### 4️⃣ Declare Slots in Layout
+
+```tsx
 import { Slot } from "react-slot-engine-z"
 
 function Layout() {
@@ -99,10 +126,13 @@ function Layout() {
 
 ---
 
-### 🔌 Plugin System
+## Plugin System
 
-- Slot Engine supports a structured plugin lifecycle.
-- Async slots automatically render with React.Suspense.
+Structured lifecycle for feature injection.
+
+- Plugin receives engine
+- Returns optional cleanup
+- Supports async slots automatically via `React.lazy`
 
 ```ts
 import React from "react"
@@ -114,21 +144,25 @@ const AdminPlugin: SlotPlugin = {
     return engine.register(
       "header",
       React.lazy(() => import("./AdminHeader")),
-      { priority: 100, async: true }
+      {
+        priority: 100,
+        async: true
+      }
     )
-  },
+  }
 }
 
-// Apply plugin
 applySlotPlugins(engine, [AdminPlugin])
 ```
 
---- 
+Async slots render with `React.Suspense`.
 
-### 🧩 Nested Engine Example
+---
 
-```ts
-<SlotProvider engine={rootEngine}>
+## Nested Engines
+
+```tsx
+<SlotProvider engine={createSlotEngine()}>
   <Layout />
 
   <SlotProvider>
@@ -137,26 +171,62 @@ applySlotPlugins(engine, [AdminPlugin])
 </SlotProvider>
 ```
 
-- Nearest engine wins, fallback to parent if slot missing
+### Behavior
 
-- Useful for page-level or role-based overrides
+- Nearest engine wins
+- Falls back to parent engine if slot not found
+- Enables page-level overrides
+- Useful for role-based UI or micro-frontends
 
 ---
 
-### 🧠 When Should You Use This?
+## Slot Options
 
-- Extensible layouts
+```ts
+engine.register(name, render, {
+  priority?: number
+  async?: boolean
+})
+```
 
-- Plugin-based UI systems
+| Option   | Description               |
+|----------|---------------------------|
+| priority | Higher renders first.     |
+| async    | Enables Suspense wrapping |
 
+---
+
+## When To Use
+
+- Extensible layout systems
+- Plugin-driven dashboards
 - Feature isolation
-
-- Role / environment-based UI
-
-- Micro-frontend friendly composition
+- Role-based rendering
+- Micro-frontend composition
+- Design systems with injection points
 
 ---
 
-### 📜 License
+## When NOT To Use
+
+- If you need global app state
+- If you need reducer-based architecture
+- If your UI is static and non-extensible
+
+---
+
+## Philosophy
+
+```txt
+Slots are explicit injection points.
+Plugins are explicit registrations.
+Rendering order is deterministic.
+
+No magic.
+```
+
+---
+
+## License
 
 MIT

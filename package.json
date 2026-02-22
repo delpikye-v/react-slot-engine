@@ -1,17 +1,13 @@
 {
   "name": "react-slot-engine-z",
-  "version": "2.0.0",
-  "description": "A scoped slot and plugin engine for composing React UIs dynamically",
-
+  "version": "2.1.0",
+  "description": "Lightweight slot & plugin engine for extensible React UI composition.",
   "license": "MIT",
   "author": "Delpi.Kye",
-
   "sideEffects": false,
-
   "main": "build/index.cjs",
   "module": "build/index.esm.js",
   "types": "build/index.d.ts",
-
   "exports": {
     ".": {
       "types": "./build/index.d.ts",
@@ -19,18 +15,15 @@
       "require": "./build/index.cjs"
     }
   },
-
   "files": [
     "build"
   ],
-
   "scripts": {
     "clean": "rimraf build",
     "build": "rollup -c",
     "cb": "npm run clean && npm run build",
     "prepublishOnly": "npm run build"
   },
-
   "repository": {
     "type": "git",
     "url": "https://github.com/delpikye-v/react-slot-engine.git"
@@ -39,40 +32,39 @@
   "bugs": {
     "url": "https://github.com/delpikye-v/react-slot-engine/issues"
   },
-
   "keywords": [
     "react",
-    "react-slots",
-    "slot-engine",
-    "plugin-system",
-    "ui-composition",
-    "layout-composition",
-    "micro-frontend",
-    "extensible-ui",
-    "react-hooks",
-    "react-library"
+    "react 18",
+    "react library",
+    "slot",
+    "react slots",
+    "slot engine",
+    "plugin system",
+    "plugin architecture",
+    "ui composition",
+    "layout system",
+    "extensible ui",
+    "modular ui",
+    "dynamic layout",
+    "micro frontend",
+    "feature isolation",
+    "react architecture",
+    "design system",
+    "headless ui"
   ],
-
   "peerDependencies": {
-    "react": ">=17"
+    "react": ">=18"
   },
-
-  "dependencies": {
-    "use-sync-external-store": "^1.6.0"
-  },
-
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-node-resolve": "^11.2.1",
-    "@types/react": "^17.0.90",
-
+    "@types/react": "^18.0.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.56.3",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.29.0",
-
-    "typescript": "^4.4.2",
-    "tslib": "^2.3.1"
+    "tslib": "^2.3.1",
+    "typescript": "^5.9.3"
   }
 }
